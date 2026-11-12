@@ -73,6 +73,9 @@ button:focus-visible, input:focus-visible, select:focus-visible {
   box-shadow: 0 8px 18px rgba(8, 127, 104, .2);
 }
 .brand-mark svg { width: 23px; height: 23px; }
+.primary-nav { display: flex; align-items: center; gap: 5px; margin-left: auto; margin-right: auto; padding: 4px; border: 1px solid var(--line); border-radius: 12px; background: var(--card); }
+.nav-link { padding: 7px 12px; border-radius: 9px; color: var(--mut); font-size: 11px; font-weight: 700; text-decoration: none; transition: background-color .18s ease, color .18s ease; }
+.nav-link:hover, .nav-link.active { background: var(--accbg); color: var(--acc); }
 h1, h2, p { margin-top: 0; }
 h1 { margin-bottom: 0; font-size: 19px; font-weight: 800; letter-spacing: -.035em; }
 .sub { margin: 2px 0 0; color: var(--mut); font-size: 12px; }
@@ -213,6 +216,19 @@ h1 { margin-bottom: 0; font-size: 19px; font-weight: 800; letter-spacing: -.035e
 .row .r.inc { color: var(--inc); }
 .row .d { width: 25px; height: 25px; margin-left: 3px; border: 0; border-radius: 8px; background: transparent; color: var(--mut); font-size: 15px; cursor: pointer; }
 .row .d:hover { background: color-mix(in srgb, #d94d42 10%, var(--card)); }
+.recent-heading { align-items: flex-end; }
+.recent-title-wrap .eyebrow { margin-bottom: 2px; }
+.transaction-tools { display: flex; min-width: 0; align-items: center; gap: 7px; }
+.search-box { display: flex; min-width: 170px; align-items: center; gap: 7px; padding: 0 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--card); color: var(--mut); }
+.search-box svg { width: 14px; height: 14px; flex: none; }
+.search-box input { width: 100%; min-width: 0; padding: 8px 0; border: 0; outline: 0; background: transparent; color: var(--ink); font-size: 10px; }
+.search-box input:focus-visible { outline: 0; }
+.filter-select { max-width: 112px; padding: 8px 9px; border: 1px solid var(--line); border-radius: 10px; background: var(--card); color: var(--mut); font-size: 10px; }
+.row-category { display: flex; align-items: center; gap: 9px; min-width: 0; }
+.category-mark { display: grid; width: 32px; height: 32px; flex: none; place-items: center; border-radius: 10px; background: var(--accbg); font-size: 14px; }
+.row-copy { min-width: 0; }
+.row b { max-width: 100%; }
+.privacy-note { margin: 0; color: var(--mut); font-size: 10px; text-align: center; }
 .seg { display: inline-flex; padding: 3px; border: 1px solid var(--line); border-radius: 99px; background: var(--card); }
 .seg button { padding: 5px 10px; border: 0; border-radius: 99px; background: transparent; color: var(--mut); font-size: 10px; cursor: pointer; }
 .seg button.a { background: var(--acc); color: #fff; }
@@ -265,6 +281,7 @@ h1 { margin-bottom: 0; font-size: 19px; font-weight: 800; letter-spacing: -.035e
   .topbar { margin-bottom: 28px; }
   .dashboard-grid { grid-template-columns: 1fr; gap: 0; }
   .secondary-column { display: grid; grid-template-columns: 1fr; }
+  .primary-nav { display: none; }
 }
 @media (max-width: 520px) {
   .app-shell { width: calc(100% - 28px); padding-top: 15px; }
@@ -281,6 +298,10 @@ h1 { margin-bottom: 0; font-size: 19px; font-weight: 800; letter-spacing: -.035e
   .capture-card, .card { padding: 15px; }
   .stage { min-height: 210px; }
   .section-heading { align-items: flex-start; }
+  .recent-heading { flex-direction: column; align-items: stretch; }
+  .transaction-tools { width: 100%; }
+  .search-box { min-width: 0; flex: 1; }
+  .filter-select { max-width: 125px; }
   .pie { gap: 8px; }
   .pie svg { width: 138px; height: 138px; }
   .leg { min-width: 115px; }
@@ -297,13 +318,18 @@ h1 { margin-bottom: 0; font-size: 19px; font-weight: 800; letter-spacing: -.035e
       <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M8 7a4 4 0 1 1 8 0v5a4 4 0 0 1-8 0z"/><path d="M5 12a7 7 0 0 0 14 0M12 19v3m-4 0h8"/></svg></span>
       <span><h1>NóiLà Ghi</h1><p class="sub">Nói một câu, xong chi tiêu</p></span>
     </a>
+    <nav class="primary-nav" aria-label="Điều hướng chính">
+      <a class="nav-link active" href="#overview">Tổng quan</a>
+      <a class="nav-link" href="#recentTitle">Giao dịch</a>
+      <a class="nav-link" href="#statsTitle">Phân tích</a>
+    </nav>
     <div class="top-actions">
       <span class="date-pill" id="today"></span>
       <button class="icon-btn" id="themeToggle" type="button" aria-label="Bật giao diện tối" title="Đổi giao diện"></button>
     </div>
   </header>
 
-  <div class="page-heading">
+  <div class="page-heading" id="overview">
     <div><p class="eyebrow">Tổng quan tài chính</p><h2>Chào bạn 👋</h2></div>
     <button class="btn ghost" id="export" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5M12 15V3"/></svg>Xuất báo cáo</button>
   </div>
@@ -342,9 +368,22 @@ h1 { margin-bottom: 0; font-size: 19px; font-weight: 800; letter-spacing: -.035e
 
       <section class="card" id="confirm" aria-live="polite"></section>
 
-      <section aria-labelledby="recentTitle">
-        <div class="section-heading"><h2 id="recentTitle">Giao dịch gần đây</h2></div>
-        <div class="card" id="list"></div>
+      <section id="recent" aria-labelledby="recentTitle">
+        <div class="section-heading recent-heading">
+          <div class="recent-title-wrap"><p class="eyebrow">Hoạt động</p><h2 id="recentTitle">Giao dịch gần đây</h2></div>
+          <div class="transaction-tools">
+            <label class="search-box" for="transactionSearch">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+              <input id="transactionSearch" type="search" placeholder="Tìm giao dịch…" autocomplete="off">
+            </label>
+            <select class="filter-select" id="transactionType" aria-label="Lọc theo loại giao dịch">
+              <option value="all">Tất cả</option>
+              <option value="expense">Khoản chi</option>
+              <option value="income">Khoản thu</option>
+            </select>
+          </div>
+        </div>
+        <div class="card" id="list" role="list" aria-label="Danh sách giao dịch"></div>
       </section>
     </div>
 
@@ -359,7 +398,10 @@ h1 { margin-bottom: 0; font-size: 19px; font-weight: 800; letter-spacing: -.035e
     </aside>
   </div>
 
-  <footer class="toolbox"><button id="seed" type="button">Nạp dữ liệu mẫu</button><button id="clear" type="button">Xóa tất cả dữ liệu</button></footer>
+  <footer class="toolbox">
+    <p class="privacy-note">Dữ liệu giao dịch được lưu trên thiết bị của bạn.</p>
+    <div><button id="seed" type="button">Nạp dữ liệu mẫu</button><button id="clear" type="button">Xóa tất cả dữ liệu</button></div>
+  </footer>
 </main>
 <div id="toast" role="status"></div>
 
@@ -367,6 +409,7 @@ h1 { margin-bottom: 0; font-size: 19px; font-weight: 800; letter-spacing: -.035e
 const $=s=>document.querySelector(s);
 const CATS=['Ăn uống','Di chuyển','Mua sắm','Hóa đơn','Giải trí','Sức khỏe','Học tập','Khác'];
 const COL={'Ăn uống':'#F26B3A','Di chuyển':'#1F8A70','Mua sắm':'#3F6FD8','Hóa đơn':'#E0A800','Giải trí':'#8E5CC9','Sức khỏe':'#D6457A','Học tập':'#2AA4B8','Khác':'#6B7A74'};
+const CAT_ICON={'Ăn uống':'🍜','Di chuyển':'🚗','Mua sắm':'🛍️','Hóa đơn':'🏠','Giải trí':'🎬','Sức khỏe':'💊','Học tập':'📚','Khác':'🧾','Thu nhập':'💰'};
 const KW=[
 ['Hóa đơn',['điện','nước ',' wifi','internet','thuê nhà','tiền nhà','hóa đơn','điện thoại','gas']],
 ['Di chuyển',['xăng','grab','taxi',' xe ','gửi xe','vé xe','buýt','gojek','vé tàu','vé máy bay']],
@@ -441,8 +484,24 @@ function renderTotals(){
 }
 function dayLabel(d){if(d===dayOff(0))return'Hôm nay';if(d===dayOff(-1))return'Hôm qua';const p=d.split('-');return p[2]+'/'+p[1]}
 function renderList(){
-  const L=[...txs].sort((a,b)=>b.date.localeCompare(a.date)||b.id-a.id).slice(0,8);
-  $('#list').innerHTML=L.length?L.map(x=>`<div class="row"><div><b>${esc(x.label)}</b><small>${esc(x.cat)} · ${dayLabel(x.date)}</small></div><div class="r ${x.type==='income'?'inc':''}">${x.type==='income'?'+':'−'}${money(x.amount)}<button class="d" data-id="${x.id}" aria-label="Xóa khoản ${esc(x.label)}">×</button></div></div>`).join(''):'<div class="empty">Chưa có khoản nào. Chạm vào mic và nói thử nhé.</div>';
+  const query=normalizeSearch($('#transactionSearch').value);
+  const type=$('#transactionType').value;
+  const matches=[...txs]
+    .sort((a,b)=>b.date.localeCompare(a.date)||b.id-a.id)
+    .filter(x=>{
+      const searchable=normalizeSearch(`${x.label} ${x.cat} ${x.date}`);
+      return (type==='all'||x.type===type)&&(!query||searchable.includes(query));
+    })
+    .slice(0,8);
+  if(!matches.length){
+    const empty=txs.length?'Không tìm thấy giao dịch phù hợp.':'Chưa có khoản nào. Chạm vào mic và nói thử nhé.';
+    $('#list').innerHTML=`<div class="empty">${empty}</div>`;
+    return;
+  }
+  $('#list').innerHTML=matches.map(x=>`<div class="row" role="listitem"><div class="row-category"><span class="category-mark" aria-hidden="true">${CAT_ICON[x.cat]||CAT_ICON['Khác']}</span><div class="row-copy"><b>${esc(x.label)}</b><small>${esc(x.cat)} · ${dayLabel(x.date)}</small></div></div><div class="r ${x.type==='income'?'inc':''}">${x.type==='income'?'+':'−'}${money(x.amount)}<button class="d" data-id="${x.id}" aria-label="Xóa khoản ${esc(x.label)}">×</button></div></div>`).join('');
+}
+function normalizeSearch(value){
+  return value.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();
 }
 let range='week';
 function renderStats(){
@@ -488,6 +547,12 @@ $('#confirm').addEventListener('change',e=>{
   it.cat=e.target.value;it.type=it.cat==='Thu nhập'?'income':'expense';clearTimeout(autoT);drawConfirm(false);
 });
 $('#list').addEventListener('click',e=>{const id=e.target.dataset.id;if(id){txs=txs.filter(x=>x.id!=id);save();renderAll()}});
+$('#transactionSearch').addEventListener('input',renderList);
+$('#transactionType').addEventListener('change',renderList);
+document.querySelectorAll('.nav-link').forEach(link=>link.addEventListener('click',()=>{
+  document.querySelectorAll('.nav-link').forEach(item=>item.classList.remove('active'));
+  link.classList.add('active');
+}));
 
 // ---------- Ghi âm (Web Speech API) ----------
 const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
