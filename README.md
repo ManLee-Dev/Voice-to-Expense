@@ -27,7 +27,7 @@ Hoặc dùng tiện ích **Live Server** trong VS Code và mở [`index.html`](.
 
 1. Chạm vào nút micro và đọc một câu có tên khoản chi cùng số tiền, hoặc nhập câu vào ô văn bản.
 2. Kiểm tra các khoản được nhận diện; chỉnh danh mục hoặc bỏ khoản không đúng.
-3. Chọn **Lưu** để ghi ngay, **Hủy** để bỏ, hoặc không thao tác để ứng dụng tự lưu sau khoảng 3 giây.
+3. Chỉnh danh mục nếu cần, sau đó chọn **Lưu** để ghi giao dịch hoặc **Hủy** để bỏ. Phần xác nhận sẽ chờ bạn và không tự lưu theo thời gian.
 4. Tìm kiếm/lọc giao dịch gần đây hoặc dùng **Xuất báo cáo** để tải dữ liệu CSV.
 
 Ví dụ câu nói:

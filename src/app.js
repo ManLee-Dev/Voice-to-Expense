@@ -17,7 +17,6 @@ let pendingTransactions = [];
 let recognition = null;
 let transcript = '';
 let toastTimer = null;
-let confirmationTimer = null;
 let listening = false;
 
 function toast(message) {
@@ -38,7 +37,7 @@ function persist(nextTransactions) {
   return false;
 }
 
-function renderConfirmation(autoSave) {
+function renderConfirmation() {
   const expenseTotal = pendingTransactions
     .filter(item => item.type === 'expense')
     .reduce((sum, item) => sum + item.amount, 0);
@@ -59,13 +58,11 @@ function renderConfirmation(autoSave) {
     <div class="acts">
       <button class="btn ghost" type="button" id="cancelConfirmation">Hủy</button>
       <button class="btn" type="button" id="saveConfirmation">Lưu</button>
-    </div>
-    ${autoSave ? '<div class="bar run"></div>' : ''}`;
+    </div>`;
 }
 
-function showConfirmation(items, autoSave = true) {
+function showConfirmation(items) {
   pendingTransactions = items;
-  clearTimeout(confirmationTimer);
 
   if (!items.length) {
     $('#confirm').style.display = 'none';
@@ -75,13 +72,11 @@ function showConfirmation(items, autoSave = true) {
   }
 
   $('#confirm').style.display = 'block';
-  renderConfirmation(autoSave);
-  if (autoSave) confirmationTimer = setTimeout(savePendingTransactions, 3000);
+  renderConfirmation();
   $('#confirm').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
 function savePendingTransactions() {
-  clearTimeout(confirmationTimer);
   if (!pendingTransactions.length) return;
 
   const updatedTransactions = [...transactions, ...pendingTransactions];
@@ -103,7 +98,6 @@ $('#confirm').addEventListener('click', event => {
     return;
   }
   if (event.target.id === 'cancelConfirmation') {
-    clearTimeout(confirmationTimer);
     pendingTransactions = [];
     $('#confirm').style.display = 'none';
     toast('Đã hủy');
@@ -111,8 +105,7 @@ $('#confirm').addEventListener('click', event => {
   }
   if (event.target.classList.contains('x')) {
     pendingTransactions = pendingTransactions.filter(item => item.id !== Number(event.target.dataset.id));
-    clearTimeout(confirmationTimer);
-    if (pendingTransactions.length) renderConfirmation(false);
+    if (pendingTransactions.length) renderConfirmation();
     else $('#confirm').style.display = 'none';
   }
 });
@@ -122,8 +115,7 @@ $('#confirm').addEventListener('change', event => {
   if (!item) return;
   item.cat = event.target.value;
   item.type = item.cat === 'Thu nhập' ? 'income' : 'expense';
-  clearTimeout(confirmationTimer);
-  renderConfirmation(false);
+  renderConfirmation();
 });
 
 $('#list').addEventListener('click', event => {
