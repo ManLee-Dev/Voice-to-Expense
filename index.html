@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>NóiLà Ghi – Ghi chi tiêu bằng giọng nói</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+<main class="app-shell">
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="NóiLà Ghi, trang tổng quan">
+      <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M8 7a4 4 0 1 1 8 0v5a4 4 0 0 1-8 0z"/><path d="M5 12a7 7 0 0 0 14 0M12 19v3m-4 0h8"/></svg></span>
+      <span><h1>NóiLà Ghi</h1><p class="sub">Nói một câu, xong chi tiêu</p></span>
+    </a>
+    <nav class="primary-nav" aria-label="Điều hướng chính">
+      <a class="nav-link active" href="#overview">Tổng quan</a>
+      <a class="nav-link" href="#recentTitle">Giao dịch</a>
+      <a class="nav-link" href="#statsTitle">Phân tích</a>
+    </nav>
+    <div class="top-actions">
+      <span class="date-pill" id="today"></span>
+      <button class="icon-btn" id="themeToggle" type="button" aria-label="Bật giao diện tối" title="Đổi giao diện"></button>
+    </div>
+  </header>
+
+  <div class="page-heading" id="overview">
+    <div><p class="eyebrow">Tổng quan tài chính</p><h2>Chào bạn 👋</h2></div>
+    <button class="btn ghost" id="export" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5M12 15V3"/></svg>Xuất báo cáo</button>
+  </div>
+
+  <section class="sums" aria-label="Tổng quan thu chi">
+    <article class="summary-card">
+      <div class="summary-top"><span>Chi tiêu hôm nay</span><span class="summary-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18m7-13H9.5a3.5 3.5 0 0 0 0 7H15a3.5 3.5 0 0 1 0 7H5"/></svg></span></div>
+      <div class="summary-value" id="sDay">0đ</div>
+    </article>
+    <article class="summary-card">
+      <div class="summary-top"><span>Chi tiêu tháng này</span><span class="summary-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span></div>
+      <div class="summary-value" id="sMon">0đ</div>
+    </article>
+    <article class="summary-card income">
+      <div class="summary-top"><span>Thu nhập tháng này</span><span class="summary-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5m-7 7 7-7 7 7"/></svg></span></div>
+      <div class="summary-value" id="sInc">0đ</div>
+    </article>
+  </section>
+
+  <div class="dashboard-grid">
+    <div class="primary-column">
+      <section class="card capture-card" aria-labelledby="captureTitle">
+        <div class="capture-heading"><h2 id="captureTitle">Ghi nhanh khoản chi</h2><p>Chạm mic hoặc nhập câu nói tự nhiên của bạn.</p></div>
+        <div class="stage">
+          <button id="mic" type="button" aria-label="Bắt đầu ghi âm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="2" width="6" height="12" rx="3" fill="currentColor"/><path d="M5 11a7 7 0 0 0 14 0M12 18v4"/></svg></button>
+          <p id="hint">Chạm vào mic và nói</p>
+          <p class="stage-note">Ví dụ: “Sáng nay ăn phở 45k với uống cà phê 30k”</p>
+          <div id="live" aria-live="polite" aria-atomic="true"></div>
+        </div>
+        <form class="typed" id="tf">
+          <input id="ti" aria-label="Nhập câu ghi chi tiêu" placeholder="Hoặc gõ câu nói vào đây…" autocomplete="off">
+          <button class="btn" type="submit">Phân tích</button>
+        </form>
+        <div class="chips" id="chips" aria-label="Câu nói mẫu"></div>
+      </section>
+
+      <section class="card" id="confirm" aria-live="polite"></section>
+
+      <section id="recent" aria-labelledby="recentTitle">
+        <div class="section-heading recent-heading">
+          <div class="recent-title-wrap"><p class="eyebrow">Hoạt động</p><h2 id="recentTitle">Giao dịch gần đây</h2></div>
+          <div class="transaction-tools">
+            <label class="search-box" for="transactionSearch">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+              <input id="transactionSearch" type="search" placeholder="Tìm giao dịch…" autocomplete="off">
+            </label>
+            <select class="filter-select" id="transactionType" aria-label="Lọc theo loại giao dịch">
+              <option value="all">Tất cả</option>
+              <option value="expense">Khoản chi</option>
+              <option value="income">Khoản thu</option>
+            </select>
+          </div>
+        </div>
+        <div class="card" id="list" role="list" aria-label="Danh sách giao dịch"></div>
+      </section>
+    </div>
+
+    <aside class="secondary-column">
+      <section aria-labelledby="statsTitle">
+        <div class="section-heading">
+          <h2 id="statsTitle">Phân tích chi tiêu</h2>
+          <div class="seg" id="seg" role="group" aria-label="Khoảng thời gian thống kê"><button type="button" data-r="week" class="a" aria-pressed="true">Tuần</button><button type="button" data-r="month" aria-pressed="false">Tháng</button></div>
+        </div>
+        <div class="card" id="stats"></div>
+      </section>
+    </aside>
+  </div>
+
+  <footer class="toolbox">
+    <p class="privacy-note">Dữ liệu giao dịch được lưu trên thiết bị của bạn.</p>
+    <div><button id="seed" type="button">Nạp dữ liệu mẫu</button><button id="clear" type="button">Xóa tất cả dữ liệu</button></div>
+  </footer>
+</main>
+<div id="toast" role="status"></div>
+
+<script type="module" src="./src/app.js"></script>
+</body>
+</html>
