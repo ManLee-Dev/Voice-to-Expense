@@ -594,7 +594,7 @@ try{
   if(theme==='dark'||theme==='light')document.documentElement.dataset.theme=theme;
 }catch(e){toast('Trình duyệt không cho phép lưu tùy chọn giao diện')}
 renderThemeButton();
-let firstVisit=false;
+let firstVisit=true;
 try{
   firstVisit=!localStorage.getItem('nlg_seeded');
   if(firstVisit)localStorage.setItem('nlg_seeded','1');
